@@ -1,0 +1,105 @@
+Intro slide
+
+Who am I?
+
+What is F#?
+- Functional language based on ML
+- Pretty much compliant with OCaml
+- Runs on the .NET framework
+	- can call and be called by C#
+
+What Isn't F#?
+- pure, it's not Haskell
+- C#
+	-	It's functional!
+	- Not OO, but good gateway language as can still write imperative code
+
+What is functional programming and why?!
+- "a programming paradigm that treats computation as the evaluation of mathematical functions and avoids state and mutable data."
+- First class functions
+- Recursion
+- Pure (ish) functions
+
+Hello World
+- let _ = printfn "Hello World!"
+- let binds a name to value
+- _ is the entry point, like main
+- printfn prints to std out
+
+Functions
+- eg.
+let add a b = a + b
+let _ =
+    printfn "%d" (add 1 2)
+- Type of this function is
+	val add : int -> int -> int
+- Takes 2 ints and returns an int
+
+Currying
+- eg.
+let add a b = a + b
+let addOne = add 1
+
+let _ =
+    printfn "%d" (addOne 5)
+- addOne allows us to create a function with arguments already specified 
+
+Automatic generalisation
+- When the compiler does type inference it tries to determine which parameters can be generic.
+- If the function has no dependency on the type of a parameter, the compiler makes it generic.
+-eg.
+> let max a b = if a > b then a else b ;;
+
+val max : 'a -> 'a -> 'a when 'a : comparison
+
+Map
+- Map applies a function to every item in a list
+- eg.
+> let inc a = a + 1
+> let list = Seq.map inc [1;2;3]
+
+val list : int list = [2; 3; 4]
+
+Filter
+- Filters a list based on a predicate
+- eg.
+> let isTwo a = (a = 2) 
+> let list = Seq.filter isTwo [1;2;3]
+
+val list : int list = [2]
+ 
+Reduce
+- Reduces a list to a single value
+- eg.
+> let list = Seq.reduce (fun acc elem -> acc + elem) [1;2;3]
+
+val list : int = 6
+
+Lambdas
+- Lambdas are anonymous functions
+- Same as C# lambdas
+- eg. 
+>let list = Seq.map (x -> x + 1) [1;2;3]
+
+val list : int list = [2; 3; 4]
+
+Pipelines
+- Pipelines pipe the result of an expression into another expression
+- Similar idea to pipes in unix
+- eg.
+let example lst =
+    lst
+        |> Seq.map (fun x -> x * x)
+        |> Seq.reduce (fun acc elem -> acc + elem)
+
+Types
+
+Using F# from C#
+- Some F# code
+- Some C# code calling the F# code
+
+Using C# from F#
+- Some F# code calling .NET libraries
+
+Another Example using LINQ
+- Some F# code using LINQ
