@@ -2,14 +2,41 @@
 
 \usepackage[landscape]{geometry}
 
+\author{James Jeffries}
+\title{A Brief Overview of F\#}
+\date{7th June 2012}
+
 \begin{document}
 
 \begin{slide}
-This is slide 1
+\maketitle
 \end{slide}
 
-\begin{slide}
-This is slide 2
+\begin{slide}{Overview}
+\begin{itemize}
+\item Functional programming 
+\item Features of F\#
+\item Interoperating with .NET
+\end{itemize}
+\end{slide}
+
+\begin{slide}{What is F\#?}
+\begin{itemize}
+\item A functional language base that runs on the .NET framework
+\begin{itemize}
+\item can call existing .NET libraries
+\item can make libraries to be called by other .NET code
+\end{itemize}
+\item Shares the core of the language with OCaml
+\end{itemize}
+\end{slide}
+
+\begin{slide}{What is functional programming and why use it?}
+\begin{itemize}
+\item Functional programming is a programming paradigm that treats computation as the evaluation of mathematical functions and avoids state and mutable data
+\item Avoiding state makes it easier to test and reason about code
+\item If there are no dependencies between functions they can be performed in parallel
+\end{itemize}
 \end{slide}
 
 \end{document}
