@@ -126,4 +126,22 @@ let _ = sumOfSquares [1;2;3;4]
 \end{verbatim}
 \end{slide}
 
+\begin{slide}{Lets make this parallel}
+\begin{verbatim}
+open System.Linq
+open System
+
+let pmap f (l:seq<_>) =
+    let pe = l.AsParallel<_>()
+    ParallelEnumerable.Select(pe, Func<_,_>(f))
+
+let sumOfSquares nums =
+    nums
+    |> pmap (fun x -> x * x) 
+    |> Seq.sum
+
+let _ = sumOfSquares [1;2;3;4]
+\end{verbatim}
+\end{slide}
+
 \end{document}
