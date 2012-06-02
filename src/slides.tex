@@ -1,6 +1,7 @@
 \documentclass[landscape]{slides}
 
 \usepackage[landscape]{geometry}
+\usepackage{verbatim}
 
 \author{James Jeffries}
 \title{A Brief Overview of F\#}
@@ -10,6 +11,8 @@
 
 \begin{slide}
 \maketitle
+@jjeffries1
+github.com/jajeffries/introToFSharp
 \end{slide}
 
 \begin{slide}{Overview}
@@ -33,11 +36,36 @@
 
 \begin{slide}{What is functional programming and why use it?}
 \begin{itemize}
-\item Functional programming is a programming paradigm that treats computation as the evaluation of mathematical functions and avoids state and mutable data
+\item Treats computation as the evaluation of functions and avoids state and mutable data
 \item Avoiding state makes it easier to test and reason about code
 \item If there are no dependencies between functions they can be performed in parallel
 \item It's generally more conicse - writing less code makes it harder to write in bugs
 \end{itemize}
 \end{slide}
+
+\begin{slide}{Hello world explained}
+\begin{verbatim}
+let _ = println "Hello World"
+\end{verbatim}
+\begin{itemize}
+\item let - binds an expression to a name
+\item \_ - is the main or entry point
+\item println - is the print function
+\end{itemize}
+\end{slide}
+
+\begin{slide}{Functions}
+\begin{verbatim}
+let add a b = a + b
+\end{verbatim}
+\beegin{itemize}
+\item type of this function is
+\begin{verbatim}
+val add : int -> int -> int
+\end{verbatim}
+\item Takes 2 ints and returns an int
+\end{itemize}
+\end{slide}
+
 
 \end{document}
