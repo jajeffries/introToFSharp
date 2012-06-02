@@ -43,7 +43,7 @@ github.com/jajeffries/introToFSharp
 \end{itemize}
 \end{slide}
 
-\begin{slide}{Hello world explained}
+\begin{slide}{Hello World Explained}
 \begin{verbatim}
 let _ = println "Hello World"
 \end{verbatim}
@@ -58,8 +58,8 @@ let _ = println "Hello World"
 \begin{verbatim}
 let add a b = a + b
 \end{verbatim}
-\beegin{itemize}
-\item type of this function is
+\begin{itemize}
+\item Type of this function is
 \begin{verbatim}
 val add : int -> int -> int
 \end{verbatim}
@@ -67,5 +67,63 @@ val add : int -> int -> int
 \end{itemize}
 \end{slide}
 
+\begin{slide}{A More Detailed Example}
+\begin{verbatim}
+#light
+
+let sqr x = x * x
+
+let sumOfSquares nums =
+    let mutable acc = 0
+    for x in nums do
+        acc <- acc + sqr x
+    acc
+
+let _ = sumOfSquares [1;2;3;4]
+\end{verbatim}
+\end{slide}
+
+\begin{slide}{Taking a more functional approach}
+\begin{verbatim}
+#light
+
+let sqr x = x * x
+
+let rec sumOfSquares nums =
+    match nums with
+    | []   -> 0.0
+    | h::t -> sqr h + sumOfSquares t
+
+let _ = sumOfSquares [1;2;3;4]
+\end{verbatim}
+\end{slide}
+
+\begin{slide}{Using Pipelines}
+\begin{verbatim}
+#light
+
+let sqr x = x * x
+
+let sumOfSquares nums =
+    nums 
+    |> Seq.map sqr
+    |> Seq.sum
+
+let _ = sumOfSquares [1;2;3;4]
+\end{verbatim}
+\end{slide}
+
+\begin{slide}{Using Lambdas}
+\begin{verbatim}
+#light
+
+let sumOfSquares nums =
+    nums 
+    |> Seq.map (fun x -> x * x) 
+    |> Seq.sum
+
+let _ = sumOfSquares [1;2;3;4]
+\end{verbatim}
+\end{slide}
 
 \end{document}

@@ -26,3 +26,10 @@
 *.mtc
 *.mtc0
 *.swp
+*.exe
+*.dll
+*.mdb
+*.sigdata
+*.optdata
+*.targets
+examples/*.xml
