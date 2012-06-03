@@ -2,8 +2,14 @@
 
 \usepackage[landscape]{geometry}
 \usepackage{verbatim}
+\usepackage{hyperref}
 
 \author{James Jeffries}
+\author{\parbox{.5\textwidth}{\centering
+  James Jeffries \\
+  \small Twitter: \href{http://www.twitter.com/jjeffries1}{@jjeffries1} \\[3pt]
+  Github: \href{https://github.com/jajeffries/introToFSharp}{github.com/jajeffries/introToFSharp}}}
+
 \title{A Brief Overview of F\#}
 \date{7th June 2012}
 
@@ -11,8 +17,6 @@
 
 \begin{slide}
 \maketitle
-@jjeffries1
-github.com/jajeffries/introToFSharp
 \end{slide}
 
 \begin{slide}{Overview}
@@ -43,6 +47,13 @@ github.com/jajeffries/introToFSharp
 \end{itemize}
 \end{slide}
 
+\begin{slide}{Why learn it?}
+\begin{itemize}
+\item Learning functional programming can improve you programming style when writing in other languages
+\item It's fun!
+\end{itemize}
+\end{slide}
+
 \begin{slide}{Hello World Explained}
 \begin{verbatim}
 let _ = println "Hello World"
@@ -67,6 +78,34 @@ val add : int -> int -> int
 \end{itemize}
 \end{slide}
 
+\begin{slide}{Currying}
+\begin{verbatim}
+let add a b = a + b
+let addOne = add 1
+
+let _ =
+    printfn "%d" (addOne 3)
+\end{verbatim}
+\begin{itemize}
+\item Currying allows us to effectively create a function with arguments already specified
+\item addOne has the following type. It returns a function that takes an int and returns an int
+\end{itemize}
+\begin{verbatim}
+val addOne : (int -> int)
+\end{verbatim}
+\end{slide}
+
+\begin{slide}{Automatic generalisation}
+\begin{itemize}
+\item When the compiler does type inference it tries to determine which parameters can be generic and which need constraints.
+\begin{verbatim}
+> let max a b = if a > b then a else b ;;
+val max : 'a -> 'a -> 'a when 'a : comparison
+\end{verbatim}
+\item Here the compiler has determined that the parameters can be generic, but must be able to be compared
+\end{itemize}
+\end{slide}
+
 \begin{slide}{A More Detailed Example}
 \begin{verbatim}
 #light
@@ -81,6 +120,23 @@ let sumOfSquares nums =
 
 let _ = sumOfSquares [1;2;3;4]
 \end{verbatim}
+\end{slide}
+
+\begin{slide}{A More Detailed Example Explained}
+\begin{description}
+\item[\#light] use lightweight syntax
+\item[mutable] declares a mutable variable. By default let binds an immutable value to a name.
+\item[\textless-] puts the value of the expression on the right into the variable on the left
+\item[acc] the last expression is the return a value
+\end{description}
+\end{slide}
+
+\begin{slide}{A More Detailed Example Explained (continued...)}
+\begin{itemize}
+\item This is not good style as it is more imperative
+\item Can be useful when first starting to write like this to get an understanding of the language
+\item Also useful when using existing .NET libraries that aren't written in a functional style
+\end{itemize}
 \end{slide}
 
 \begin{slide}{Taking a more functional approach}
@@ -98,6 +154,14 @@ let _ = sumOfSquares [1;2;3;4]
 \end{verbatim}
 \end{slide}
 
+\begin{slide}{Taking a more functional approach explained}
+\begin{description}
+\item[rec] declares a recursive function. Functions aren't recursive by default.
+\item[match] matches a pattern. Sort of like a switch statement. match returns a value so we don't need to specify what to return seperately
+\item[h::t] splits a list into it's head and tail. Binds the head to h and tail to t
+\end{description}
+\end{slide}
+
 \begin{slide}{Using Pipelines}
 \begin{verbatim}
 #light
@@ -113,6 +177,13 @@ let _ = sumOfSquares [1;2;3;4]
 \end{verbatim}
 \end{slide}
 
+\begin{slide}{Using Pipelines Explained}
+\begin{itemize}
+\item pipelines are similar to pipes in unix
+\item they allow you to pipe the result of the previous expression into the last argument of the next expression
+\end{itemize}
+\end{slide}
+
 \begin{slide}{Using Lambdas}
 \begin{verbatim}
 #light
@@ -124,6 +195,13 @@ let sumOfSquares nums =
 
 let _ = sumOfSquares [1;2;3;4]
 \end{verbatim}
+\end{slide}
+
+\begin{slide}{Using Lambdas Explained}
+\begin{itemize}
+\item lambdas are anonymous functions
+\item declared using the fun keyword
+\end{itemize}
 \end{slide}
 
 \begin{slide}{Lets make this parallel}
@@ -142,6 +220,32 @@ let sumOfSquares nums =
 
 let _ = sumOfSquares [1;2;3;4]
 \end{verbatim}
+\end{slide}
+
+\begin{slide}{Lets make this parallel explained}
+\begin{itemize}
+\item As the functions don't rely on each other it is easy to parallelise using LINQ
+\end{itemize}
+\begin{description}
+\item[open] opens a namespace. Similar to the using keyword in C\#
+\item[l:seq\textless\_\textgreater] specifies the type of l
+\item[\_] seq is generic but as we don't care what the type is we can use \_ as a wilcard
+\end{description}
+\end{slide}
+
+\begin{slide}{Lets make this parallel explained (continued...)}
+\begin{description}
+\item[l.AsParallel\textless\_\textgreater()] calls seq's AsParallel method to get a ParallelEnumerable
+\item[ParallelEnumerable.Select(pe, Func\textless\_,\_\textgreater(f))] Projects in parallel each element of a sequence into a new form
+\end{description}
+\end{slide}
+
+\begin{slide}{Where can I learn more?}
+\begin{itemize}
+\item Expert F\# by Don Syme, Adam Granicz and Antonio Cisternino - very detailed and lots of good explanations
+\item \href{http://channel9.msdn.com/blogs/pdc2008/tl11}{http://channel9.msdn.com/blogs/pdc2008/tl11} by Luca Bolognese - good overview to get you started with lots of useful tips
+\item \href{http://msdn.microsoft.com/en-us/vstudio/hh386303}{http://msdn.microsoft.com/en-us/vstudio/hh386303} - lots of good videos and tutorials
+\end{itemize}
 \end{slide}
 
 \end{document}
