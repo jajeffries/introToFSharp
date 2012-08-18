@@ -10,8 +10,7 @@
   \small Twitter: \href{http://www.twitter.com/jjeffries1}{@jjeffries1} \\[3pt]
   Github: \href{https://github.com/jajeffries/introToFSharp}{github.com/jajeffries/introToFSharp}}}
 
-\title{A Brief Overview of F\#}
-\date{7th June 2012}
+\title{An Introduction to F\#}
 
 \begin{document}
 
@@ -21,9 +20,8 @@
 
 \begin{slide}{Overview}
 \begin{itemize}
-\item Functional programming 
-\item Features of F\#
-\item Interoperating with .NET
+\item An overview of the basic syntax
+\item Examples of some of the cooler parts of F\#
 \end{itemize}
 \end{slide}
 
@@ -35,22 +33,6 @@
 \item can make libraries to be called by other .NET code
 \end{itemize}
 \item Shares the core of the language with OCaml
-\end{itemize}
-\end{slide}
-
-\begin{slide}{What is functional programming and why use it?}
-\begin{itemize}
-\item Treats computation as the evaluation of functions and avoids state and mutable data
-\item Avoiding state makes it easier to test and reason about code
-\item If there are no dependencies between functions they can be performed in parallel
-\item It's generally more conicse - writing less code makes it harder to write in bugs
-\end{itemize}
-\end{slide}
-
-\begin{slide}{Why learn it?}
-\begin{itemize}
-\item Learning functional programming can improve you programming style when writing in other languages
-\item It's fun!
 \end{itemize}
 \end{slide}
 
@@ -237,6 +219,135 @@ let _ = sumOfSquares [1;2;3;4]
 \begin{description}
 \item[l.AsParallel\textless\_\textgreater()] calls seq's AsParallel method to get a ParallelEnumerable
 \item[ParallelEnumerable.Select(pe, Func\textless\_,\_\textgreater(f))] Projects in parallel each element of a sequence into a new form
+\end{description}
+\end{slide}
+
+\begin{slide}{The type keyword}
+\begin{description}
+\item[Type abbreviations] similar to C++'s typedef. For example:
+\begin{verbatim}
+type SizeType = uint32
+\end{verbatim}
+Also works with generics
+\begin{verbatim}
+type Reducer<'a, 'b> = 'a -> 'b -> 'a
+\end{verbatim}
+\end{description}
+\end{slide}
+
+\begin{slide}{The type keyword (continued...)}
+\begin{description}
+\item[Classes] Compile down to the same IL (bytecode) as other .NET classes
+\begin{verbatim}
+type MyClass(x: string) =        
+  let private_value = x
+  do
+    printfn "%s" private_value
+  member this.PublicProperty = 
+    "Public: " + private_value
+  member this.PrintPublicProperty() =
+    printfn "%s" this.PublicProperty
+\end{verbatim}
+\end{description}
+\end{slide}
+
+\begin{slide}{The type keyword (continued...)}
+\begin{description}
+\item[Inheritance] sorry if this examples a bit compact 
+\begin{verbatim}
+type Point(x: int, y: int) as this =
+  do
+    this.PrintPoint()
+  member this.X = x
+  member this.Y = y
+  new() = Point(0, 0)
+  member this.PrintX() = printfn "%d" this.X
+  member this.PrintY() = printfn "%d" this.Y
+  abstract PrintPoint : unit -> unit
+  default this.PrintPoint() = 
+    printfn "Point(%d, %d)" this.X this.Y
+\end{verbatim}
+\end{description}
+\end{slide}
+
+\begin{slide}{The type keyword (continued...)}
+\begin{description}
+\begin{verbatim}
+type NamedPoint(name: string, x: int, y: int) =
+  inherit Point(x, y)
+  member this.Name = name
+
+  override this.PrintPoint() =
+    printfn "Name: %s Point(%d, %d)" this.Name this.X this.Y
+\end{verbatim}
+\end{description}
+\end{slide}
+
+\begin{slide}{The type keyword (continued...)}
+\begin{description}
+\item[Structures] Value types that are allocated on the stack 
+\begin{verbatim}
+type Point1D =
+  struct 
+    // val declares an unitialised field 
+    val x: float
+  end
+
+[<Struct>]
+type AlternatePoint1D = 
+  val x: float
+\end{verbatim}
+\end{description}
+\end{slide}
+
+\begin{slide}{The type keyword (continued...)}
+\begin{description}
+\item[Records] aggregates of named values
+\begin{verbatim}
+type MyRecord = { X: int; Y: int; Z: int }
+
+let myRecord1 = { X = 1; Y = 2; Z = 3; }
+
+let myRecord2 = {
+    MyRecord.X = 1; 
+    MyRecord.Y = 2; 
+    MyRecord.Z = 3 
+  }
+\end{verbatim}
+\end{description}
+\end{slide}
+
+\begin{slide}{The type keyword (continued...)}
+\begin{description}
+\item[Unions] can be one of several named cases 
+\begin{verbatim}
+type BinaryTree =
+  | Leaf of int
+  | Node of int * BinaryTree * BinaryTree
+
+let myTree = Node(1, 
+                 Node(3, Leaf(2), Leaf(4)), 
+                 Node(6, Leaf(5), Leaf(7)))
+\end{verbatim}
+\end{description}
+\end{slide}
+
+\begin{slide}{Options}
+\begin{description} 
+\item[Options] like haskell's maybe (I think)
+\begin{verbatim}
+type Option<'a> =
+    | Some of 'a
+    | None
+
+let mySomeOption = Some("A Value")
+let myNoneOption = None
+
+let processOption opt =
+  match opt with
+  | Some(opt) -> printfn "%s" opt
+  | None -> printfn "%s" "No Value"
+\end{verbatim}
 \end{description}
 \end{slide}
 

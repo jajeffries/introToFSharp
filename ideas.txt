@@ -103,3 +103,9 @@ Using C# from F#
 
 Another Example using LINQ
 - Some F# code using LINQ
+
+Solving a project euler problem
+- Problem 1
+- Seq.filter toInclude [1..999] |> Seq.sum
+
+Hinley Milner Type inference
