@@ -76,6 +76,8 @@ let myTree = Node(1, Node(3, Leaf(2), Leaf(4)), Node(6, Leaf(5), Leaf(7)))
 
 // Options
 let mySomeOption = Some("A Value")
+let optionValue = mySomeOption.Value 
+// optionValue == "A Value"
 let myNoneOption = None
 
 let processOption opt = 
