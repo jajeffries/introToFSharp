@@ -20,7 +20,7 @@
 
 \begin{slide}{Overview}
 \begin{itemize}
-\item An overview of the basic syntax
+\item An overview of some of the basic syntax
 \item Examples of some of the cooler parts of F\#
 \end{itemize}
 \end{slide}
@@ -36,18 +36,32 @@
 \end{itemize}
 \end{slide}
 
-\begin{slide}{Hello World Explained}
-\begin{verbatim}
-let _ = println "Hello World"
-\end{verbatim}
+\begin{slide}{Let bindings}
 \begin{itemize}
-\item let - binds an expression to a name
-\item \_ - is the main or entry point
-\item println - is the print function
+\item Binds an expression to a name
+\item Immutable by default
+\item Type is inferred
 \end{itemize}
+\begin{verbatim}
+let x = "Hello"
+\end{verbatim}
 \end{slide}
 
-\begin{slide}{Functions}
+\begin{slide}{Mutable let bindings}
+\begin{itemize}
+\item Can make a let binding mutable using the mutable keyword 
+\item Can't change the type when changing the value of a mutable variable
+\end{itemize}
+\begin{verbatim}
+let mutable var = 5 
+
+var <- 7 // correct
+var <- 9 // correct
+var <- "Hello" //incorrect
+\end{verbatim}
+\end{slide}
+
+\begin{slide}{Function Bindings}
 \begin{verbatim}
 let add a b = a + b
 \end{verbatim}
@@ -77,6 +91,17 @@ val addOne : (int -> int)
 \end{verbatim}
 \end{slide}
 
+\begin{slide}{Type annotations}
+\begin{itemize}
+\item Can specify types instead of relying on type inference
+\end{itemize}
+\begin{verbatim}
+let intIncrement (x:int) = x + 1
+
+let floatIncrement (x:float) = x + 1.0
+\end{verbatim}
+\end{slide}
+
 \begin{slide}{Automatic generalisation}
 \begin{itemize}
 \item When the compiler does type inference it tries to determine which parameters can be generic and which need constraints.
@@ -88,7 +113,7 @@ val max : 'a -> 'a -> 'a when 'a : comparison
 \end{itemize}
 \end{slide}
 
-\begin{slide}{A More Detailed Example}
+\begin{slide}{A More Detailed Let Example}
 \begin{verbatim}
 #light
 
@@ -144,6 +169,21 @@ let _ = sumOfSquares [1;2;3;4]
 \end{description}
 \end{slide}
 
+\begin{slide}{Using match and options}
+\begin{itemize}
+\item An option type can hold two possible values: Some(x) or None.
+\item Often used to indicate success or failure of a computation
+\end{itemize}
+\begin{verbatim}
+let safediv x y = 
+  match y with
+  | 0 -> None
+  | _ -> Some(x/y)
+ 
+// val safediv : int -> int -> int option
+\end{verbatim}
+\end{slide}
+
 \begin{slide}{Using Pipelines}
 \begin{verbatim}
 #light
@@ -186,7 +226,7 @@ let _ = sumOfSquares [1;2;3;4]
 \end{itemize}
 \end{slide}
 
-\begin{slide}{Lets make this parallel}
+\begin{slide}{Working with other .NET libraries}
 \begin{verbatim}
 open System.Linq
 open System
@@ -204,7 +244,7 @@ let _ = sumOfSquares [1;2;3;4]
 \end{verbatim}
 \end{slide}
 
-\begin{slide}{Lets make this parallel explained}
+\begin{slide}{Working with other .NET libraries continued}
 \begin{itemize}
 \item As the functions don't rely on each other it is easy to parallelise using LINQ
 \end{itemize}
@@ -215,7 +255,7 @@ let _ = sumOfSquares [1;2;3;4]
 \end{description}
 \end{slide}
 
-\begin{slide}{Lets make this parallel explained (continued...)}
+\begin{slide}{Working with other .NET libraries continued}
 \begin{description}
 \item[l.AsParallel\textless\_\textgreater()] calls seq's AsParallel method to get a ParallelEnumerable
 \item[ParallelEnumerable.Select(pe, Func\textless\_,\_\textgreater(f))] Projects in parallel each element of a sequence into a new form
