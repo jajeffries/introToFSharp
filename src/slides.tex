@@ -25,6 +25,19 @@
 \end{itemize}
 \end{slide}
 
+\begin{slide}{Trying examples}
+\begin{itemize}
+\item You should be able to try out any of the examples using
+\begin{itemize}
+\item Visual Studio 2010 or above with the F\# interactive console
+\item F\# on mono - this is a bit tricky to set up though
+\item LINQPad
+\item www.tryfsharp.org
+\item www.tryfs.net
+\end{itemize}
+\end{itemize}
+\end{slide}
+
 \begin{slide}{What is F\#?}
 \begin{itemize}
 \item A functional language base that runs on the .NET framework
@@ -169,24 +182,9 @@ let _ = sumOfSquares [1;2;3;4]
 \end{description}
 \end{slide}
 
-\begin{slide}{Using match and options}
-\begin{itemize}
-\item An option type can hold two possible values: Some(x) or None.
-\item Often used to indicate success or failure of a computation
-\end{itemize}
-\begin{verbatim}
-let safediv x y = 
-  match y with
-  | 0 -> None
-  | _ -> Some(x/y)
- 
-// val safediv : int -> int -> int option
-\end{verbatim}
-\end{slide}
-
-\begin{slide}{More on options}
+\begin{slide}{Options}
 \begin{description} 
-\item[Options] like haskell's maybe (I think)
+\item like haskell's maybe (I think)
 \begin{verbatim}
 type Option<'a> =
     | Some of 'a
@@ -201,6 +199,21 @@ let processOption opt =
   | None -> printfn "%s" "No Value"
 \end{verbatim}
 \end{description}
+\end{slide}
+
+\begin{slide}{Using match and options}
+\begin{itemize}
+\item An option type can hold two possible values: Some(x) or None.
+\item Often used to indicate success or failure of a computation
+\end{itemize}
+\begin{verbatim}
+let safediv x y = 
+  match y with
+  | 0 -> None
+  | _ -> Some(x/y)
+ 
+// val safediv : int -> int -> int option
+\end{verbatim}
 \end{slide}
 
 \begin{slide}{Using Pipelines}
@@ -243,42 +256,6 @@ let _ = sumOfSquares [1;2;3;4]
 \item lambdas are anonymous functions
 \item declared using the fun keyword
 \end{itemize}
-\end{slide}
-
-\begin{slide}{Working with other .NET libraries}
-\begin{verbatim}
-open System.Linq
-open System
-
-let pmap f (l:seq<_>) =
-    let pe = l.AsParallel<_>()
-    ParallelEnumerable.Select(pe, Func<_,_>(f))
-
-let sumOfSquares nums =
-    nums
-    |> pmap (fun x -> x * x) 
-    |> Seq.sum
-
-let _ = sumOfSquares [1;2;3;4]
-\end{verbatim}
-\end{slide}
-
-\begin{slide}{Working with other .NET libraries continued}
-\begin{itemize}
-\item As the functions don't rely on each other it is easy to parallelise using LINQ
-\end{itemize}
-\begin{description}
-\item[open] opens a namespace. Similar to the using keyword in C\#
-\item[l:seq\textless\_\textgreater] specifies the type of l
-\item[\_] seq is generic but as we don't care what the type is we can use \_ as a wilcard
-\end{description}
-\end{slide}
-
-\begin{slide}{Working with other .NET libraries continued}
-\begin{description}
-\item[l.AsParallel\textless\_\textgreater()] calls seq's AsParallel method to get a ParallelEnumerable
-\item[ParallelEnumerable.Select(pe, Func\textless\_,\_\textgreater(f))] Projects in parallel each element of a sequence into a new form
-\end{description}
 \end{slide}
 
 \begin{slide}{The type keyword}
@@ -396,6 +373,7 @@ let myTree = Node(1,
 \item The next part of the talk shows off some of the more interesting parts of F\#
 \begin{itemize}
 \item Active Patterns
+\item Asynchronous Workflows
 \item Units of Measure
 \end{itemize}
 \end{itemize}
@@ -414,11 +392,32 @@ let isDivisibleByTwo x =
 \end{verbatim}
 \end{slide}
 
+\begin{slide}{Asynchronous Workflows}
+\begin{itemize}
+\item allow you to define units of work that can be executed asynchronously
+\item a type of computation expression
+\end{itemize}
+\end{slide}
+
 \begin{slide}{Units of Measure}
 \begin{itemize}
 \item integral and floating point values can be assigned a unit of measure
 \item helps to avoid errors when working with values of different types of measurement
 \item see example code for further details
+\end{itemize}
+\end{slide}
+
+\begin{slide}{What haven't we covered}
+\begin{itemize}
+\item Collections
+\item New things from F\# 3.0
+\begin{itemize}
+\item better LINQ support
+\item type providers
+\item auto properties
+\end{itemize}
+\item Laziness
+\item Message passing
 \end{itemize}
 \end{slide}
 
