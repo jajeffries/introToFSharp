@@ -184,6 +184,25 @@ let safediv x y =
 \end{verbatim}
 \end{slide}
 
+\begin{slide}{More on options}
+\begin{description} 
+\item[Options] like haskell's maybe (I think)
+\begin{verbatim}
+type Option<'a> =
+    | Some of 'a
+    | None
+
+let mySomeOption = Some("A Value")
+let myNoneOption = None
+
+let processOption opt =
+  match opt with
+  | Some(opt) -> printfn "%s" opt
+  | None -> printfn "%s" "No Value"
+\end{verbatim}
+\end{description}
+\end{slide}
+
 \begin{slide}{Using Pipelines}
 \begin{verbatim}
 #light
@@ -372,23 +391,28 @@ let myTree = Node(1,
 \end{description}
 \end{slide}
 
-\begin{slide}{Options}
-\begin{description} 
-\item[Options] like haskell's maybe (I think)
+\begin{slide}{Interesting features of F\#}
+\begin{itemize}
+\item The next part of the talk shows off some of the more interesting parts of F\#
+\begin{itemize}
+\item Active Patterns
+\item Asynchronous workflows
+\item Units of Measure
+\end{itemize}
+\end{itemize}
+\end{slide}
+
+\begin{slide}{Active Patterns}
+\begin{itemize}
+\item allows you to write custom patterns to use in match expressions
+\end{itemize}
 \begin{verbatim}
-type Option<'a> =
-    | Some of 'a
-    | None
-
-let mySomeOption = Some("A Value")
-let myNoneOption = None
-
-let processOption opt =
-  match opt with
-  | Some(opt) -> printfn "%s" opt
-  | None -> printfn "%s" "No Value"
+let (|Odd|Even|) x = if x % 2 = 0 then Even else Odd
+let isDivisibleByTwo x = 
+  match x with 
+  | Even -> true 
+  | Odd -> false
 \end{verbatim}
-\end{description}
 \end{slide}
 
 \begin{slide}{Where can I learn more?}
